@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeVersion AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin-bottom: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            background: #dcfce7;
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .feature {
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🛡️ SafeVersion AI</h1>
+        <p>Privacy-First Digital Safety System</p>
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>System Status</h2>
+            <p class="status">● SafeVersion is running</p>
+        </div>
+
+        <h2 class="feature">Safety Features</h2>
+
+        <div class="card-container">
+
+            <div class="card">
+                <h2>👶 Age Protection</h2>
+                <p>Adaptive safety rules based on the user's age.</p>
+            </div>
+
+            <div class="card">
+                <h2>👁️ Screen Analysis</h2>
+                <p>Real-time analysis of displayed content.</p>
+            </div>
+
+            <div class="card">
+                <h2>🔞 Explicit Content</h2>
+                <p>Detect and respond to inappropriate content.</p>
+            </div>
+
+            <div class="card">
+                <h2>⚠️ Violence Detection</h2>
+                <p>Identify violent or graphic content.</p>
+            </div>
+
+            <div class="card">
+                <h2>🎭 Deepfake Detection</h2>
+                <p>Identify potentially manipulated media.</p>
+            </div>
+
+            <div class="card">
+                <h2>🧠 Mental Health Safety</h2>
+                <p>Identify potentially harmful mental-health content.</p>
+            </div>
+
+            <div class="card">
+                <h2>🚨 Cyberbullying</h2>
+                <p>Detect toxic language and online harassment.</p>
+            </div>
+
+            <div class="card">
+                <h2>🔐 Scam Detection</h2>
+                <p>Identify suspicious links and phishing attempts.</p>
+            </div>
+
+            <div class="card">
+                <h2>🔒 Privacy Mode</h2>
+                <p>Designed for local, privacy-first processing.</p>
+            </div>
+
+        </div>
+
+        <div class="card feature">
+            <h2>Explainable AI</h2>
+            <p>SafeVersion will explain why content was flagged.</p>
+
+            <p>
+                Example:
+                <br>
+                Explicit Content: 94%
+                <br>
+                Violence: 12%
+                <br>
+                Scam Risk: 5%
+            </p>
+        </div>
+        <!-- AI Content Detection -->
+        <div class="card feature">
+            <h2>🤖 Test SafeVersion AI</h2>
+
+            <p>Upload an image and let SafeVersion analyze it.</p>
+
+            <input type="file" id="imageInput" accept="image/*">
+
+            <br><br>
+
+            <button id="analyzeButton">
+                🔍 Analyze Content
+            </button>
+
+            <div id="result" style="margin-top: 20px;"></div>
+        </div>
+
+        <script>
+            document.getElementById("analyzeButton").addEventListener("click", async function () {
+
+                const fileInput = document.getElementById("imageInput");
+                const resultBox = document.getElementById("result");
+
+                if (!fileInput.files.length) {
+                    resultBox.innerHTML = "⚠️ Please select an image first.";
+                    return;
+                }
+
+                resultBox.innerHTML = "🔄 SafeVersion AI is analyzing...";
+
+                const formData = new FormData();
+                formData.append("image", fileInput.files[0]);
+
+                try {
+                    const response = await fetch("/analyze", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.error) {
+                        resultBox.innerHTML = "❌ " + data.error;
+                        return;
+                    }
+
+                    resultBox.innerHTML =
+                        "<h3>" + data.status + "</h3>" +
+                        "<p><strong>Confidence:</strong> " +
+                        data.confidence + "%</p>" +
+                        "<p><strong>Action:</strong> " +
+                        data.action + "</p>";
+
+                } catch (error) {
+                    resultBox.innerHTML =
+                        "❌ Could not connect to SafeVersion AI.";
+                }
+            });
+        </script>
+    </div>
+
+    <footer>
+        SafeVersion AI — Privacy-First Digital Safety
+    </footer>
+
+</body>
+
+</html>
