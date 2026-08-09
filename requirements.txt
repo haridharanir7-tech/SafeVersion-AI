@@ -3,4 +3,9 @@ Pillow
 torch
 torchvision
 transformers
+Flask
+Pillow
+torch
+torchvision
+transformers
 huggingface_hub
